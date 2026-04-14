@@ -179,6 +179,58 @@ body {
   50% { background-position: 100% 50%; }
 }
 
+/* ── Page Indicator Wrapper ── */
+.indicator-audio-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-shrink: 0;
+  margin-bottom: 2px;
+  position: relative;
+  z-index: 20;
+}
+
+/* ── Read Aloud Button ── */
+.read-aloud-btn {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.read-aloud-btn:hover {
+  transform: translateY(-2px);
+  background-color: var(--color-secondary);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.read-aloud-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.read-aloud-btn.playing {
+  background-color: #34D399;
+  animation: pulse-speaker 1.5s infinite;
+}
+
+@keyframes pulse-speaker {
+  0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(52, 211, 153, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+
 /* ── Book Container ── */
 .book-container {
   position: relative;
@@ -298,43 +350,46 @@ body {
 
 /* ── Final Page Celebration ── */
 .final-celebration {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  z-index: 8;
+  z-index: 300;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  padding: 20px;
+  justify-content: center;
+  padding: 30px;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.6s ease;
+  visibility: hidden;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  transition: all 0.6s ease;
 }
 
 .final-celebration.visible {
   opacity: 1;
+  visibility: visible;
 }
 
 .final-message {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.92), rgba(52, 211, 153, 0.92));
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.98), rgba(52, 211, 153, 0.98));
   color: white;
-  padding: 16px 24px;
-  border-radius: 20px;
+  padding: 24px 32px;
+  border-radius: 24px;
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 700;
   text-align: center;
-  line-height: 1.6;
-  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255,255,255,0.2);
-  animation: celebrationSlideUp 0.8s var(--transition-smooth) forwards;
-  margin-bottom: 60px;
+  line-height: 1.7;
+  max-width: 320px;
+  box-shadow: 0 15px 50px rgba(16, 185, 129, 0.5);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  transform: scale(0.9);
+  transition: transform 0.6s var(--transition-smooth);
 }
 
-@keyframes celebrationSlideUp {
-  0% { transform: translateY(40px); opacity: 0; }
-  100% { transform: translateY(0); opacity: 1; }
+.final-celebration.visible .final-message {
+  transform: scale(1);
 }
 
 /* Page loading spinner */
@@ -388,6 +443,8 @@ body {
   flex-shrink: 0;
   width: 100%;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 20;
 }
 
 .nav-btn {
@@ -532,43 +589,74 @@ body {
 
 /* ── Read Again Button ── */
 .read-again-container {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
   z-index: 10;
   opacity: 0;
   visibility: hidden;
+  height: 0;
+  overflow: hidden;
   transition: all 0.5s var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
 
 .read-again-container.visible {
   opacity: 1;
   visibility: visible;
+  height: auto;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
-.read-again-btn {
+.read-again-btn, .whatsapp-btn {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 14px 28px;
+  padding: 12px 24px;
   border: none;
   border-radius: var(--radius-button);
-  background: linear-gradient(135deg, #34D399, #10B981, #059669);
-  color: white;
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 6px 24px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   transition: all 0.3s var(--transition-smooth);
-  animation: bounceIn 0.6s var(--transition-smooth);
+  text-decoration: none;
+  width: 220px;
+  max-width: 90vw;
   -webkit-tap-highlight-color: transparent;
 }
 
-.read-again-btn:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.5);
+.read-again-btn {
+  background: linear-gradient(135deg, #34D399, #10B981, #059669);
+  color: white;
+  animation: bounceIn 0.6s var(--transition-smooth);
+}
+
+.whatsapp-btn {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: white;
+  animation: bounceIn 0.7s var(--transition-smooth);
+}
+
+.read-again-btn:hover, .whatsapp-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+@media (min-width: 768px) {
+  .read-again-container.visible {
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+  }
+  .read-again-btn, .whatsapp-btn {
+    width: auto;
+    padding: 14px 28px;
+  }
 }
 
 .read-again-btn:active {
@@ -667,6 +755,12 @@ body {
 
   .page-indicator {
     font-size: 0.9rem;
+  }
+
+  .read-aloud-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
   }
 }
 

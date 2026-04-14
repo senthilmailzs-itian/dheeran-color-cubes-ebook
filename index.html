@@ -47,30 +47,15 @@
 
     <!-- Book Container -->
     <div class="book-container" id="book-container">
-      <div class="page-wrapper" id="page-wrapper">
-        <!-- Pages are injected dynamically by script.js -->
-      </div>
-
-      <!-- Swipe Hint (mobile) -->
-      <div class="swipe-hint" id="swipe-hint">
-        <span>👆</span> Swipe to turn pages
-      </div>
-
-      <!-- Read Again Button -->
-      <div class="read-again-container" id="read-again-container">
-        <button class="read-again-btn" id="read-again-btn">
-          🔄 Read Again
-        </button>
-      </div>
-
-      <!-- Final Celebration Overlay -->
-      <div class="final-celebration" id="final-celebration">
-        <div class="final-message" id="final-message"></div>
-      </div>
     </div>
-
-    <!-- Page Indicator -->
-    <p class="page-indicator" id="page-indicator">⭐ Page 1 of 18 ⭐</p>
+    
+    <!-- Page Indicator & Audio -->
+    <div class="indicator-audio-wrapper">
+      <p class="page-indicator" id="page-indicator">⭐ Page 1 of 18 ⭐</p>
+      <button class="read-aloud-btn" id="read-aloud-btn" aria-label="Read page aloud" title="Read page aloud">
+        🔊
+      </button>
+    </div>
 
     <!-- Navigation Controls -->
     <div class="nav-controls">
@@ -90,6 +75,20 @@
       <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="18">
         <div class="progress-fill" id="progress-fill" style="width: 5.56%"></div>
       </div>
+    </div>
+
+    <!-- Swipe Hint (mobile) -->
+    <div class="swipe-hint" id="swipe-hint" aria-hidden="true">👉 Swipe to turn pages 👈</div>
+
+    <!-- Read Again (shown on last page) -->
+    <div class="read-again-container" id="read-again-container">
+      <button class="read-again-btn" id="read-again-btn">📖 Read Again</button>
+      <a href="https://wa.me/917305542848" target="_blank" class="whatsapp-btn" id="whatsapp-btn">💬 Chat with Us</a>
+    </div>
+
+    <!-- Final Celebration Overlay -->
+    <div class="final-celebration" id="final-celebration">
+      <p class="final-message" id="final-message"></p>
     </div>
 
   </div>

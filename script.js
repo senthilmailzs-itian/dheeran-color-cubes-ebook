@@ -9,7 +9,7 @@
   /* ── Configuration ── */
   const CONFIG = {
     totalPages: 18, // cover + page1-16 + back
-    autoplayInterval: 3000,
+    autoplayInterval: 12000, // increased time per slide during autoplay
     swipeThreshold: 50,
     preloadAhead: 2,
     confettiCount: 150,
@@ -60,6 +60,28 @@
     "Last page! You made it! 🥳",
   ];
 
+  /* ── Page Texts for Speech ── */
+  const PAGE_TEXTS = [
+    "Dheeran and the Magic Color Cubes.", // 0: Cover
+    "Dheeran enjoyed being in nature. Everything around him looked fresh and beautiful.", // 1: Page 1
+    "One day... something felt strange. The colors looked different.", // 2: Page 2
+    "The world around Dheeran felt quiet and grey. Even in his notebook... the colors were gone.", // 3: Page 3
+    "Dheeran looked around. Where did the colors go?", // 4: Page 4
+    "He started walking, looking everywhere. He wanted to find the reason.", // 5: Page 5
+    "Then he found a small building. It looked different from everything else.", // 6: Page 6
+    "The door was slightly open. A soft light came from inside.", // 7: Page 7
+    "Dheeran stepped inside slowly. He looked around the old workshop. There were pots, books, and jars everywhere.", // 8: Page 8
+    "He saw glowing cubes in the room. Each cube had a color inside it.", // 9: Page 9
+    "The cubes were connected to a machine. It looked like they controlled colors.", // 10: Page 10
+    "The cubes began to glow brighter. The light grew stronger and stronger.", // 11: Page 11
+    "BOOM! Colors burst everywhere! The room filled with bright light.", // 12: Page 12
+    "The world became colorful again. Dheeran smiled happily.", // 13: Page 13
+    "Connect the dots in order from 1 to 10 to fill the entire grid!", // 14: Page 14
+    "Color Dheeran and his Color Cubes! Use your favorite colors and make them come alive!", // 15: Page 15
+    "My story fun page. How much did you like this story? Draw your favorite moment from the story! Thank you for reading.", // 16: Page 16
+    "A Magical Color Adventure! The world’s colors are fading... Only Dheeran can bring them back! Join Dheeran on an epic adventure to discover the secret behind the missing colors. With courage, kindness, and a little bit of magic, he must solve puzzles, face challenges, and unlock the power of colors to save the day! Find the magic, solve the puzzle, restore colors! A fun and heartwarming children’s story. A magical journey of colors and courage. Perfect for young readers and dreamers. Let’s bring the colors back together! The End." // 17: Back cover
+  ];
+
   /* ── Final Page Celebration Message ── */
   const FINAL_MESSAGE = `🎉 Congratulations, Super Reader! 🎉\n\nYou finished the whole book!\nYou are amazing and brave\njust like Dheeran! 🌟\n\n⭐ Keep reading, keep dreaming! ⭐`;
 
@@ -77,12 +99,16 @@
   let confettiAnimationId = null;
   let toastTimer = null;
 
+  /* ── Speech State ── */
+  let synth = window.speechSynthesis;
+  let currentUtterance = null;
+
   /* ── DOM References ── */
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
   const loadingScreen = $('#loading-screen');
-  const pageWrapper = $('#page-wrapper');
+  const pageWrapper = $('#book-container');
   const pageIndicator = $('#page-indicator');
   const progressFill = $('#progress-fill');
   const btnPrev = $('#btn-prev');
@@ -97,6 +123,7 @@
   const finalCelebration = $('#final-celebration');
   const finalMessageEl = $('#final-message');
   const confettiCtx = confettiCanvas.getContext('2d');
+  const readAloudBtn = $('#read-aloud-btn');
 
   /* ── Initialize ── */
   function init() {
@@ -290,9 +317,17 @@
   function goToPage(newPage, direction) {
     if (newPage < 0 || newPage >= CONFIG.totalPages || newPage === currentPage) return;
 
+    stopSpeaking(); // Stop any reading when turning page
+
     const oldPageDiv = $(`#page-${currentPage}`);
     const newPageDiv = $(`#page-${newPage}`);
 
+    // If autoplaying, speaking is handled by the completion of the previous utterance 
+    // or we manually trigger it if we're jumping/swiping. 
+    // But since `nextPage()` is called in the `onend` block of the previous speech,
+    // we want to ensure we don't accidentally start reading a slide twice.
+    // The easiest robust way is to just let navigation happen, and let another function or the caller trigger speech.
+    
     // Remove zoom
     if (isZoomed) {
       oldPageDiv.classList.remove('zoomed');
@@ -349,6 +384,11 @@
   function nextPage() {
     if (currentPage < CONFIG.totalPages - 1) {
       goToPage(currentPage + 1, 'next');
+      if (isAutoplay) {
+        // Will be triggered by timeout or we can just trigger it here. 
+        // We trigger it explicitly to make sure.
+        setTimeout(() => speakPage(currentPage, true), 800);
+      }
     }
   }
 
@@ -406,6 +446,90 @@
     }, CONFIG.toastDuration);
   }
 
+  /* ── Read Aloud (Text-to-Speech) ── */
+  function stopSpeaking() {
+    if (!synth) return;
+    if (synth.speaking) {
+      synth.cancel();
+    }
+    if (readAloudBtn) {
+      readAloudBtn.classList.remove('playing');
+    }
+  }
+
+  function toggleSpeech() {
+    if (!synth) return;
+    if (synth.speaking) {
+      stopSpeaking();
+    } else {
+      speakPage(currentPage, false);
+    }
+  }
+
+  function speakPage(index, fromAutoplay = false) {
+    stopSpeaking();
+    const textToSpeak = PAGE_TEXTS[index];
+    if (!textToSpeak) {
+      // If there's no text, wait 2s and go next if autoplaying
+      if (fromAutoplay && isAutoplay) {
+        autoplayTimer = setTimeout(() => { nextPage(); }, 2000);
+      }
+      return;
+    }
+
+    currentUtterance = new SpeechSynthesisUtterance(textToSpeak);
+    
+    // Attempt to make it more expressive/friendly for kids
+    currentUtterance.pitch = 1.1; 
+    currentUtterance.rate = 0.90; // Slower to ensure time to listen
+
+    // Try to find a friendly natural Indian voice first
+    const voices = synth.getVoices();
+    const preferredVoice = voices.find(v => v.lang === 'en-IN' || v.lang === 'hi-IN' || (v.name && v.name.includes('India'))) 
+                        || voices.find(v => v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Zira') || v.name.includes('Alex'));
+    if (preferredVoice) {
+      currentUtterance.voice = preferredVoice;
+    }
+
+    currentUtterance.onstart = () => {
+      if (readAloudBtn) {
+        readAloudBtn.classList.add('playing');
+      }
+      // If autoplay is active and we just started speaking, clear the default timer 
+      // so it waits until speech finishes to advance.
+      if (fromAutoplay && autoplayTimer) {
+         clearTimeout(autoplayTimer);
+      }
+    };
+
+    currentUtterance.onend = () => {
+      if (readAloudBtn) {
+        readAloudBtn.classList.remove('playing');
+      }
+      // Resume autoplay navigation once audio finishes reading
+      if (fromAutoplay && isAutoplay) {
+        autoplayTimer = setTimeout(() => {
+          if (currentPage < CONFIG.totalPages - 1) {
+            nextPage();
+          } else {
+            stopAutoplay();
+          }
+        }, 1500); // Wait 1.5s after finishing the speech before turning page
+      }
+    };
+
+    currentUtterance.onerror = () => {
+      if (readAloudBtn) {
+        readAloudBtn.classList.remove('playing');
+      }
+      if (fromAutoplay && isAutoplay) {
+        autoplayTimer = setTimeout(() => { nextPage(); }, 2000);
+      }
+    };
+
+    synth.speak(currentUtterance);
+  }
+
   /* ── Page Tap / Zoom ── */
   function handlePageTap(e) {
     // Ignore if swiping
@@ -434,18 +558,12 @@
     isAutoplay = true;
     btnAutoplay.classList.add('playing');
     btnAutoplay.innerHTML = '⏸ Pause';
-    autoplayTimer = setInterval(() => {
-      if (currentPage < CONFIG.totalPages - 1) {
-        nextPage();
-      } else {
-        stopAutoplay();
-      }
-    }, CONFIG.autoplayInterval);
+    speakPage(currentPage, true);
   }
 
   function stopAutoplay() {
     isAutoplay = false;
-    clearInterval(autoplayTimer);
+    clearTimeout(autoplayTimer);
     autoplayTimer = null;
     btnAutoplay.classList.remove('playing');
     btnAutoplay.innerHTML = '▶ Play';
@@ -554,6 +672,11 @@
     showAppreciation("🏆 You finished the book! 🏆");
 
     launchConfetti();
+
+    // Auto-close celebration after some time (like toasts)
+    setTimeout(() => {
+      finalCelebration.classList.remove('visible');
+    }, 5000);
   }
 
   function launchConfetti() {
@@ -641,6 +764,18 @@
     btnAutoplay.addEventListener('click', toggleAutoplay);
     readAgainBtn.addEventListener('click', goToStart);
     fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+    if (readAloudBtn) {
+      readAloudBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // prevent zoom trigger
+        toggleSpeech();
+      });
+    }
+
+    // Force load voices in some browsers
+    if (speechSynthesis && speechSynthesis.onvoiceschanged !== undefined) {
+      speechSynthesis.onvoiceschanged = () => synth.getVoices();
+    }
 
     // Touch events on page wrapper
     pageWrapper.addEventListener('touchstart', handleTouchStart, { passive: true });
