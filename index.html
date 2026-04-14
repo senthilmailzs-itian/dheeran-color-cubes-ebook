@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Dheeran and Color Cubes — A fun, interactive kids storybook about a boy who discovers magical colorful cubes.">
+  <meta name="theme-color" content="#7C3AED">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Dheeran and Color Cubes — Interactive Storybook</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Preload critical fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loading-screen">
+    <div class="loading-cubes">
+      <div class="loading-cube"></div>
+      <div class="loading-cube"></div>
+      <div class="loading-cube"></div>
+      <div class="loading-cube"></div>
+      <div class="loading-cube"></div>
+    </div>
+    <p class="loading-text">Opening the storybook…</p>
+  </div>
+
+  <!-- Background Floating Shapes -->
+  <div class="bg-shapes" id="bg-shapes" aria-hidden="true"></div>
+
+  <!-- Fullscreen Button -->
+  <button class="fullscreen-btn" id="fullscreen-btn" title="Toggle fullscreen" aria-label="Toggle fullscreen">⛶</button>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- Appreciation Toast -->
+  <div class="appreciation-toast" id="appreciation-toast" aria-hidden="true"></div>
+
+  <!-- Main App -->
+  <div class="app-container">
+
+    <!-- Title -->
+    <h1 class="book-title">📖 Dheeran and Color Cubes</h1>
+
+    <!-- Book Container -->
+    <div class="book-container" id="book-container">
+      <div class="page-wrapper" id="page-wrapper">
+        <!-- Pages are injected dynamically by script.js -->
+      </div>
+
+      <!-- Swipe Hint (mobile) -->
+      <div class="swipe-hint" id="swipe-hint">
+        <span>👆</span> Swipe to turn pages
+      </div>
+
+      <!-- Read Again Button -->
+      <div class="read-again-container" id="read-again-container">
+        <button class="read-again-btn" id="read-again-btn">
+          🔄 Read Again
+        </button>
+      </div>
+
+      <!-- Final Celebration Overlay -->
+      <div class="final-celebration" id="final-celebration">
+        <div class="final-message" id="final-message"></div>
+      </div>
+    </div>
+
+    <!-- Page Indicator -->
+    <p class="page-indicator" id="page-indicator">⭐ Page 1 of 18 ⭐</p>
+
+    <!-- Navigation Controls -->
+    <div class="nav-controls">
+      <button class="nav-btn nav-btn--prev" id="btn-prev" aria-label="Previous page">
+        ◀ Back
+      </button>
+      <button class="nav-btn nav-btn--autoplay" id="btn-autoplay" aria-label="Toggle autoplay">
+        ▶ Play
+      </button>
+      <button class="nav-btn nav-btn--next" id="btn-next" aria-label="Next page">
+        Next ▶
+      </button>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+      <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="18">
+        <div class="progress-fill" id="progress-fill" style="width: 5.56%"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
