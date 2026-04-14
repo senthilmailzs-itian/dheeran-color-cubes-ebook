@@ -52,9 +52,18 @@
     <!-- Page Indicator & Audio -->
     <div class="indicator-audio-wrapper">
       <p class="page-indicator" id="page-indicator">⭐ Page 1 of 18 ⭐</p>
-      <button class="read-aloud-btn" id="read-aloud-btn" aria-label="Read page aloud" title="Read page aloud">
-        🔊
-      </button>
+      
+      <div class="lang-audio-controls">
+        <select id="language-select" class="language-select" aria-label="Select Language">
+          <option value="en">English</option>
+          <option value="hi">हिंदी (Hindi)</option>
+          <option value="ta">தமிழ் (Tamil)</option>
+        </select>
+        
+        <button class="read-aloud-btn" id="read-aloud-btn" aria-label="Read page aloud" title="Read page aloud">
+          🔊
+        </button>
+      </div>
     </div>
 
     <!-- Navigation Controls -->
@@ -70,11 +79,9 @@
       </button>
     </div>
 
-    <!-- Progress Bar -->
+    <!-- Progress Scrubber -->
     <div class="progress-container">
-      <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="18">
-        <div class="progress-fill" id="progress-fill" style="width: 5.56%"></div>
-      </div>
+      <input type="range" id="progress-scrubber" class="progress-scrubber" min="0" value="0" step="1" aria-label="Page scrubber">
     </div>
 
     <!-- Swipe Hint (mobile) -->

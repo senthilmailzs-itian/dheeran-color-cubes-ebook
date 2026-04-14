@@ -60,33 +60,82 @@
     "Last page! You made it! 🥳",
   ];
 
-  /* ── Page Texts for Speech ── */
-  const PAGE_TEXTS = [
-    "Dheeran and the Magic Color Cubes.", // 0: Cover
-    "Dheeran enjoyed being in nature. Everything around him looked fresh and beautiful.", // 1: Page 1
-    "One day... something felt strange. The colors looked different.", // 2: Page 2
-    "The world around Dheeran felt quiet and grey. Even in his notebook... the colors were gone.", // 3: Page 3
-    "Dheeran looked around. Where did the colors go?", // 4: Page 4
-    "He started walking, looking everywhere. He wanted to find the reason.", // 5: Page 5
-    "Then he found a small building. It looked different from everything else.", // 6: Page 6
-    "The door was slightly open. A soft light came from inside.", // 7: Page 7
-    "Dheeran stepped inside slowly. He looked around the old workshop. There were pots, books, and jars everywhere.", // 8: Page 8
-    "He saw glowing cubes in the room. Each cube had a color inside it.", // 9: Page 9
-    "The cubes were connected to a machine. It looked like they controlled colors.", // 10: Page 10
-    "The cubes began to glow brighter. The light grew stronger and stronger.", // 11: Page 11
-    "BOOM! Colors burst everywhere! The room filled with bright light.", // 12: Page 12
-    "The world became colorful again. Dheeran smiled happily.", // 13: Page 13
-    "Connect the dots in order from 1 to 10 to fill the entire grid!", // 14: Page 14
-    "Color Dheeran and his Color Cubes! Use your favorite colors and make them come alive!", // 15: Page 15
-    "My story fun page. How much did you like this story? Draw your favorite moment from the story! Thank you for reading.", // 16: Page 16
-    "A Magical Color Adventure! The world’s colors are fading... Only Dheeran can bring them back! Join Dheeran on an epic adventure to discover the secret behind the missing colors. With courage, kindness, and a little bit of magic, he must solve puzzles, face challenges, and unlock the power of colors to save the day! Find the magic, solve the puzzle, restore colors! A fun and heartwarming children’s story. A magical journey of colors and courage. Perfect for young readers and dreamers. Let’s bring the colors back together! The End." // 17: Back cover
-  ];
-
-  /* ── Final Page Celebration Message ── */
-  const FINAL_MESSAGE = `🎉 Congratulations, Super Reader! 🎉\n\nYou finished the whole book!\nYou are amazing and brave\njust like Dheeran! 🌟\n\n⭐ Keep reading, keep dreaming! ⭐`;
+  /* ── Story Data for Multi-Language Speech ── */
+  const STORY_DATA = {
+    en: {
+      pages: [
+        "Dheeran and the Magic Color Cubes.", // 0: Cover
+        "Dheeran enjoyed being in nature. Everything around him looked fresh and beautiful.", // 1: Page 1
+        "One day... something felt strange. The colors looked different.", // 2: Page 2
+        "The world around Dheeran felt quiet and grey. Even in his notebook... the colors were gone.", // 3: Page 3
+        "Dheeran looked around. Where did the colors go?", // 4: Page 4
+        "He started walking, looking everywhere. He wanted to find the reason.", // 5: Page 5
+        "Then he found a small building. It looked different from everything else.", // 6: Page 6
+        "The door was slightly open. A soft light came from inside.", // 7: Page 7
+        "Dheeran stepped inside slowly. He looked around the old workshop. There were pots, books, and jars everywhere.", // 8: Page 8
+        "He saw glowing cubes in the room. Each cube had a color inside it.", // 9: Page 9
+        "The cubes were connected to a machine. It looked like they controlled colors.", // 10: Page 10
+        "The cubes began to glow brighter. The light grew stronger and stronger.", // 11: Page 11
+        "BOOM! Colors burst everywhere! The room filled with bright light.", // 12: Page 12
+        "The world became colorful again. Dheeran smiled happily.", // 13: Page 13
+        "Connect the dots in order from 1 to 10 to fill the entire grid!", // 14: Page 14
+        "Color Dheeran and his Color Cubes! Use your favorite colors and make them come alive!", // 15: Page 15
+        "My story fun page. How much did you like this story? Draw your favorite moment from the story! Thank you for reading.", // 16: Page 16
+        "A Magical Color Adventure! The world’s colors are fading... Only Dheeran can bring them back! Join Dheeran on an epic adventure to discover the secret behind the missing colors. With courage, kindness, and a little bit of magic, he must solve puzzles, face challenges, and unlock the power of colors to save the day! Find the magic, solve the puzzle, restore colors! A fun and heartwarming children’s story. A magical journey of colors and courage. Perfect for young readers and dreamers. Let’s bring the colors back together! The End." // 17: Back cover
+      ],
+      celebration: `🎉 Congratulations, Super Reader! 🎉\n\nYou finished the whole book!\nYou are amazing and brave\njust like Dheeran! 🌟\n\n⭐ Keep reading, keep dreaming! ⭐`
+    },
+    hi: {
+      pages: [
+        "धीरन और जादुई रंगीन क्यूब्स।", // 0
+        "धीरन को प्रकृति में रहना अच्छा लगता था। उसके चारों ओर सब कुछ ताज़ा और सुंदर लग रहा था।", // 1
+        "एक दिन... कुछ अजीब लगा। रंग अलग दिख रहे थे।", // 2
+        "धीरन के आसपास की दुनिया शांत और धूसर महसूस हो रही थी। यहाँ तक कि उसकी नोटबुक में भी... रंग चले गए थे।", // 3
+        "धीरन ने चारों ओर देखा। रंग कहाँ चले गए?", // 4
+        "उसने हर तरफ देखते हुए चलना शुरू किया। वह कारण ढूँढना चाहता था।", // 5
+        "तभी उसे एक छोटी सी इमारत मिली। यह बाकी सब चीजों से अलग लग रही थी।", // 6
+        "दरवाजा थोड़ा खुला था। अंदर से हल्की रोशनी आ रही थी।", // 7
+        "धीरन धीरे-धीरे अंदर गया। उसने पुरानी कार्यशाला के चारों ओर देखा। हर जगह बर्तन, किताबें और जार थे।", // 8
+        "उसने कमरे में चमकते हुए क्यूब्स देखे। हर क्यूब के अंदर एक रंग था।", // 9
+        "क्यूब्स एक मशीन से जुड़े थे। ऐसा लग रहा था कि वे रंगों को नियंत्रित करते हैं।", // 10
+        "क्यूब्स और भी तेजी से चमकने लगे। रोशनी और भी तेज होती गई।", // 11
+        "धमाका! हर तरफ रंग बिखर गए! कमरा तेज़ रोशनी से भर गया।", // 12
+        "दुनिया फिर से रंगीन हो गई। धीरन खुशी से मुस्कुराया।", // 13
+        "पूरे ग्रिड को भरने के लिए 1 से 10 तक के बिंदुओं को क्रम से जोड़ें!", // 14
+        "धीरन और उसके रंगीन क्यूब्स में रंग भरें! अपने पसंदीदा रंगों का उपयोग करें और उन्हें जीवंत बनाएं!", // 15
+        "मेरी कहानी का मज़ेदार पन्ना। आपको यह कहानी कितनी पसंद आई? कहानी से अपना पसंदीदा पल बनाएं! पढ़ने के लिए धन्यवाद।", // 16
+        "एक जादुई रंगीन साहसिक कार्य! दुनिया के रंग फीके पड़ रहे हैं... केवल धीरन ही उन्हें वापस ला सकता है! खोए हुए रंगों के पीछे के रहस्य को खोजने के लिए एक महाकाव्य साहसिक कार्य पर धीरन के साथ जुड़ें। साहस, दया और थोड़े से जादू के साथ, उसे पहेलियों को हल करना होगा, चुनौतियों का सामना करना होगा और दिन बचाने के लिए रंगों की शक्ति को अनलॉक करना होगा! जादू खोजें, पहेली सुलझाएं, रंग बहाल करें! एक मज़ेदार और दिल को छू लेने वाली बच्चों की कहानी। रंगों और साहस की एक जादुई यात्रा। युवा पाठकों और सपनों के लिए बिल्कुल सही। आइए रंगों को फिर से साथ लाएं! समाप्त।" // 17
+      ],
+      celebration: `🎉 बधाई हो, सुपर रीडर! 🎉\n\nआपने पूरी किताब खत्म कर ली है!\nआप धीरन की तरह ही\nअद्भुत और साहसी हैं! 🌟\n\n⭐ पढ़ते रहें, सपने देखते रहें! ⭐`
+    },
+    ta: {
+      pages: [
+        "தீரன் மற்றும் மேஜிக் கலர் கியூப்ஸ்.", // 0: Cover
+        "தீரனுக்கு இயற்கையில இருக்குறது ரொம்ப பிடிக்கும். அவன் சுத்தி எல்லாமே ரொம்ப ஃப்ரெஷா, அழகா இருந்துச்சு.", // 1: Page 1
+        "ஒரு நாள்... ஏதோ விசித்திரமா தெரிஞ்சுது. கலர்ஸ் எல்லாம் வித்தியாசமா இருந்துச்சு.", // 2: Page 2
+        "தீரனைச் சுத்தி இருக்குற உலகம் ரொம்ப சைலன்ட்டாவும், சாம்பல் நிறமாவும் மாறிடுச்சு. அவனோட நோட்டுப்புத்தகத்துல கூட... கலர்ஸ் எல்லாம் காணாம போயிடுச்சு.", // 3: Page 3
+        "தீரன் சுத்தி முத்தி பார்த்தான். கலர்ஸ் எல்லாம் எங்கே போச்சு?", // 4: Page 4
+        "அவன் எல்லா இடத்துலயும் தேடிக்கிட்டே நடக்க ஆரம்பிச்சான். இதுக்கு என்ன காரணம்னு தெரிஞ்சுக்க அவன் ஆசைப்பட்டான்.", // 5: Page 5
+        "அப்போ அவனுக்கு ஒரு சின்ன பில்டிங் தெரிஞ்சுது. அது மத்த எல்லாத்தையும் விட வித்தியாசமா இருந்துச்சு.", // 6: Page 6
+        "கதவு லேசா திறந்துருந்துச்சு. உள்ளே இருந்து ஒரு மென்மையான வெளிச்சம் வந்துச்சு.", // 7: Page 7
+        "தீரன் மெதுவா உள்ளே போனான். அந்த பழைய வொர்க்ஷாப் (workshop) சுத்தி பார்த்தான். எங்கே பார்த்தாலும் பானைங்க, புக்குங்க, ஜாடிகளா இருந்துச்சு.", // 8: Page 8
+        "அவன் அந்த ரூம்ல மின்னிக்கிட்டு இருந்த கியூப்ஸை (cubes) பார்த்தான். ஒவ்வொரு கியூப்குள்ளயும் ஒரு கலர் இருந்துச்சு.", // 9: Page 9
+        "அந்த கியூப்ஸ் எல்லாம் ஒரு மெஷினோட (machine) கனெக்ட் ஆகியிருந்துச்சு. அதுதான் எல்லா கலர்ஸையும் கண்ட்ரோல் பண்ற மாதிரி தெரிஞ்சுது.", // 10: Page 10
+        "அந்த கலர் கியூப்ஸ் இன்னும் பிரகாசமா மின்ன ஆரம்பிச்சது. வெளிச்சம் மேன்மேலும் அதிகமாயிட்டே போச்சு.", // 11: Page 11
+        "பூம்! கலர்ஸ் எல்லாம் எல்லா இடத்துலயும் சிதறுச்சு! அந்த ரூம் ஃபுல்லா பிரகாசமான வெளிச்சம் நிறைஞ்சுது.", // 12: Page 12
+        "உலகம் மறுபடியும் கலர்ஃபுல்லா மாறிடுச்சு. தீரன் ரொம்ப சந்தோஷமா சிரிச்சான்.", // 13: Page 13
+        "இந்த கிரிட் (grid) ஃபுல்லா ஃபில் (fill) பண்ண, 1-லிருந்து 10 வரை இருக்குற புள்ளிங்களை வரிசையா கனெக்ட் பண்ணுங்க!", // 14: Page 14
+        "தீரன் மற்றும் அவனோட கலர் கியூப்ஸ்க்கு கலர் பண்ணுங்க! உங்களுக்கு பிடிச்ச கலர்ஸை யூஸ் பண்ணி அதுங்களுக்கு உயிர் கொடுங்க!", // 15: Page 15
+        "என்னோட கதையோட ஃபன் (fun) பேஜ். இந்த கதை உங்களுக்கு எவ்வளவு பிடிச்சிருந்துச்சு? இந்த கதையில உங்களுக்கு பிடிச்ச ஒரு சீனை வரைஞ்சு காட்டுங்க! படிச்சதுக்கு ரொம்ப தேங்க்ஸ்.", // 16: Page 16
+        "ஒரு மேஜிக்கலான கலர் அட்வென்ச்சர்! உலகின் கலர்ஸ் எல்லாம் குறைஞ்சுட்டே போகுது... தீரனால மட்டும்தான் அதைத் திரும்ப கொண்டு வர முடியும்! தொலைஞ்சு போன கலர்ஸோட ரகசியத்தைக் கண்டுபிடிக்க தீரனோட இந்த சாகசத்துல நீங்களும் சேர்ந்துக்கோங்க. தைரியம், அன்பு அப்புறம் கொஞ்சம் மேஜிக்கோட அவனோட இந்த பயணத்துல புதிர்களை விடுவிச்சு, சவால்களை எதிர்கொண்டு, கலர்ஸோட சக்தியை மீட்டெடுக்கணும்! மேஜிக்கை கண்டுபிடிங்க, புதிரை விடுவிங்க, கலர்ஸை திரும்ப கொண்டு வாங்க! ஒரு அழகான குழந்தைகளுக்கான கதை. தைரியம் மற்றும் கலர்ஸ் நிறைந்த ஒரு மாயாஜால பயணம். எப்போவும் கனவு கண்டுட்டு இருக்குற குட்டி பசங்களுக்காக. திரும்பவும் கலர்ஸை ஒண்ணா கொண்டு வருவோம்! முற்றிற்று." // 17: Back cover
+      ],
+      celebration: `🎉 வாழ்த்துக்கள், சூப்பர் ரீடர்! 🎉\n\nநீங்க முழு புக்கையும் படிச்சு முடிச்சுட்டீங்க!\nநீங்களும் தீரன் மாதிரியே ரொம்ப\nஅற்புதமானவர் மற்றும் தைரியமானவர்! 🌟\n\n⭐ தொடர்ந்து படிங்க, கனவு காணுங்க! ⭐`
+    }
+  };
 
   /* ── State ── */
   let currentPage = 0;
+  let currentLanguage = 'en';
   let isAutoplay = false;
   let autoplayTimer = null;
   let isZoomed = false;
@@ -110,7 +159,8 @@
   const loadingScreen = $('#loading-screen');
   const pageWrapper = $('#book-container');
   const pageIndicator = $('#page-indicator');
-  const progressFill = $('#progress-fill');
+  const languageSelect = $('#language-select');
+  const progressScrubber = $('#progress-scrubber');
   const btnPrev = $('#btn-prev');
   const btnNext = $('#btn-next');
   const btnAutoplay = $('#btn-autoplay');
@@ -124,11 +174,18 @@
   const finalMessageEl = $('#final-message');
   const confettiCtx = confettiCanvas.getContext('2d');
   const readAloudBtn = $('#read-aloud-btn');
+  const whatsappBtn = $('#whatsapp-btn');
 
   /* ── Initialize ── */
   function init() {
     createBackgroundShapes();
     createPageElements();
+
+    // Initialize scrubber
+    if (progressScrubber) {
+      progressScrubber.max = CONFIG.totalPages - 1;
+    }
+
     preloadImages(0);
     updateUI();
     bindEvents();
@@ -322,12 +379,6 @@
     const oldPageDiv = $(`#page-${currentPage}`);
     const newPageDiv = $(`#page-${newPage}`);
 
-    // If autoplaying, speaking is handled by the completion of the previous utterance 
-    // or we manually trigger it if we're jumping/swiping. 
-    // But since `nextPage()` is called in the `onend` block of the previous speech,
-    // we want to ensure we don't accidentally start reading a slide twice.
-    // The easiest robust way is to just let navigation happen, and let another function or the caller trigger speech.
-    
     // Remove zoom
     if (isZoomed) {
       oldPageDiv.classList.remove('zoomed');
@@ -424,9 +475,20 @@
     btnPrev.disabled = currentPage === 0;
     btnNext.disabled = currentPage === CONFIG.totalPages - 1;
 
-    // Progress bar
-    const progress = ((currentPage + 1) / CONFIG.totalPages) * 100;
-    progressFill.style.width = `${progress}%`;
+    // Progress Scrubber Sync
+    if (progressScrubber) {
+      progressScrubber.value = currentPage;
+      updateScrubberBackground();
+    }
+  }
+
+  function updateScrubberBackground() {
+    if (!progressScrubber) return;
+    const min = parseInt(progressScrubber.min) || 0;
+    const max = parseInt(progressScrubber.max) || 1;
+    const val = parseInt(progressScrubber.value) || 0;
+    const percent = ((val - min) / (max - min)) * 100;
+    progressScrubber.style.background = `linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) ${percent}%, rgba(124, 58, 237, 0.12) ${percent}%, rgba(124, 58, 237, 0.12) 100%)`;
   }
 
   /* ── Appreciation Toast ── */
@@ -468,9 +530,11 @@
 
   function speakPage(index, fromAutoplay = false) {
     stopSpeaking();
-    const textToSpeak = PAGE_TEXTS[index];
+
+    const langData = STORY_DATA[currentLanguage] || STORY_DATA.en;
+    const textToSpeak = langData.pages[index];
+
     if (!textToSpeak) {
-      // If there's no text, wait 2s and go next if autoplaying
       if (fromAutoplay && isAutoplay) {
         autoplayTimer = setTimeout(() => { nextPage(); }, 2000);
       }
@@ -478,18 +542,42 @@
     }
 
     currentUtterance = new SpeechSynthesisUtterance(textToSpeak);
-    
-    // Attempt to make it more expressive/friendly for kids
-    currentUtterance.pitch = 1.1; 
-    currentUtterance.rate = 0.90; // Slower to ensure time to listen
+    if (currentLanguage === 'hi') currentUtterance.lang = 'hi-IN';
+    else if (currentLanguage === 'ta') currentUtterance.lang = 'ta-IN';
+    else currentUtterance.lang = 'en-IN';
 
-    // Try to find a friendly natural Indian voice first
-    const voices = synth.getVoices();
-    const preferredVoice = voices.find(v => v.lang === 'en-IN' || v.lang === 'hi-IN' || (v.name && v.name.includes('India'))) 
-                        || voices.find(v => v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Zira') || v.name.includes('Alex'));
+    // Find a matching voice
+    let voices = synth.getVoices();
+
+    // Retry if voices aren't loaded yet
+    if (voices.length === 0) {
+      setTimeout(() => speakPage(index, fromAutoplay), 200);
+      return;
+    }
+
+    let preferredVoice = null;
+
+    if (currentLanguage === 'hi') {
+      preferredVoice = voices.find(v => (v.name.includes('Google') || v.name.includes('Natural')) && (v.lang.includes('hi') || v.name.toLowerCase().includes('hindi')))
+        || voices.find(v => v.lang.toLowerCase().replace('_', '-').includes('hi') || v.name.toLowerCase().includes('hindi'));
+    } else if (currentLanguage === 'ta') {
+      preferredVoice = voices.find(v => (v.name.includes('Google') || v.name.includes('Natural')) && (v.lang.includes('ta') || v.name.toLowerCase().includes('tamil')))
+        || voices.find(v => v.name.includes('தமிழ்'))
+        || voices.find(v => v.lang.toLowerCase().replace('_', '-').includes('ta') || v.name.toLowerCase().includes('tamil') || v.name.toLowerCase().includes('valluvar'));
+    } else {
+      preferredVoice = voices.find(v => v.lang === 'en-IN' || (v.lang === 'en' && v.name.includes('India')))
+        || voices.find(v => v.name.includes('Google') || v.name.includes('Natural'));
+    }
+
     if (preferredVoice) {
       currentUtterance.voice = preferredVoice;
+    } else if (currentLanguage !== 'en') {
+      // User is trying to listen in a language their system doesn't support
+      showAppreciation(`⚠️ ${currentLanguage.toUpperCase()} voice pack not found! Please check your system settings.`);
     }
+
+    currentUtterance.pitch = 1.05;
+    currentUtterance.rate = 0.85;
 
     currentUtterance.onstart = () => {
       if (readAloudBtn) {
@@ -498,7 +586,7 @@
       // If autoplay is active and we just started speaking, clear the default timer 
       // so it waits until speech finishes to advance.
       if (fromAutoplay && autoplayTimer) {
-         clearTimeout(autoplayTimer);
+        clearTimeout(autoplayTimer);
       }
     };
 
@@ -665,7 +753,8 @@
     readAgainContainer.classList.add('visible');
 
     // Show final celebration message
-    finalMessageEl.innerHTML = FINAL_MESSAGE.replace(/\n/g, '<br>');
+    const langData = STORY_DATA[currentLanguage] || STORY_DATA.en;
+    finalMessageEl.innerText = langData.celebration;
     finalCelebration.classList.add('visible');
 
     // Show special last-page toast
@@ -769,6 +858,46 @@
       readAloudBtn.addEventListener('click', (e) => {
         e.stopPropagation(); // prevent zoom trigger
         toggleSpeech();
+      });
+    }
+
+    if (languageSelect) {
+      languageSelect.addEventListener('change', (e) => {
+        currentLanguage = e.target.value;
+        stopSpeaking();
+        // If autoplaying, restart to catch the new language
+        if (isAutoplay) {
+          stopAutoplay();
+          startAutoplay();
+        }
+      });
+    }
+
+    if (progressScrubber) {
+      // Real-time navigation while dragging
+      progressScrubber.addEventListener('input', (e) => {
+        const targetPage = parseInt(e.target.value);
+        if (targetPage !== currentPage) {
+          goToPage(targetPage, targetPage > currentPage ? 'next' : 'prev');
+          updateScrubberBackground();
+        }
+      });
+
+      // Stop speech or autoplay when user starts manual scrubbing
+      progressScrubber.addEventListener('mousedown', () => {
+        stopAutoplay();
+        stopSpeaking();
+      });
+      progressScrubber.addEventListener('touchstart', () => {
+        stopAutoplay();
+        stopSpeaking();
+      });
+    }
+
+    if (whatsappBtn) {
+      whatsappBtn.addEventListener('click', (e) => {
+        // Since it's an <a> and we have a target="_blank", it works naturally, 
+        // but adding an event just in case or for logging/analytics later.
       });
     }
 
